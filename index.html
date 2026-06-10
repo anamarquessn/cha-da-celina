@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confirmação de Presença – Chá da Celina 🦋</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink:       #c9748a;
+    --pink-light: #f7e8ed;
+    --pink-mid:   #e8a0b4;
+    --rose-dark:  #a85570;
+    --cream:      #fdf6f8;
+    --white:      #ffffff;
+    --text:       #4a3040;
+    --muted:      #b09aaa;
+    --border:     #f0d8e2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 60px;
+    overflow-x: hidden;
+  }
+
+  /* BANNER */
+  .banner { width: 100%; overflow: hidden; line-height: 0; }
+  .banner img { width: 100%; height: auto; display: block; }
+
+  /* HEADER */
+  .header { text-align: center; padding: 28px 20px 10px; }
+  .header .tag {
+    display: inline-block;
+    background: var(--pink-light);
+    color: var(--rose-dark);
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 5px 16px; border-radius: 100px; margin-bottom: 12px;
+  }
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; color: var(--text); font-weight: 600; line-height: 1.25;
+  }
+  .header h1 em { color: var(--pink); font-style: italic; }
+  .header .sub { color: var(--muted); font-size: 0.88rem; margin-top: 8px; font-weight: 300; }
+
+  /* CARD */
+  .card {
+    background: var(--white);
+    border-radius: 24px; padding: 32px 28px;
+    width: 100%; max-width: 540px; margin: 24px 16px 0;
+    box-shadow: 0 8px 48px rgba(180,100,130,0.10);
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--pink-mid), var(--pink), var(--rose-dark));
+  }
+
+  /* SECTION TITLE */
+  .sec-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 600; color: var(--rose-dark);
+    display: flex; align-items: center; gap: 8px; margin-bottom: 18px;
+  }
+  .sec-title::before {
+    content: ''; display: inline-block; width: 18px; height: 2px;
+    background: var(--pink-mid); border-radius: 2px;
+  }
+
+  /* FIELDS */
+  .field { margin-bottom: 18px; }
+  label.lbl {
+    display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 7px;
+  }
+  input[type="text"], select {
+    width: 100%; padding: 12px 16px;
+    border: 1.5px solid var(--border); border-radius: 12px;
+    font-family: 'Nunito', sans-serif; font-size: 0.95rem; color: var(--text);
+    background: var(--cream); outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s; appearance: none;
+  }
+  input[type="text"]:focus, select:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px rgba(201,116,138,0.13);
+    background: #fff;
+  }
+  .select-wrap { position: relative; }
+  .select-wrap::after {
+    content: '▾'; position: absolute; right: 14px; top: 50%;
+    transform: translateY(-50%); color: var(--pink); pointer-events: none; font-size: 0.9rem;
+  }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 26px 0; }
+
+  /* PERSON CARD */
+  .person-card {
+    background: var(--cream); border: 1.5px dashed var(--pink-mid);
+    border-radius: 16px; padding: 20px 18px; margin-bottom: 14px;
+    animation: slideIn 0.22s ease;
+  }
+  @keyframes slideIn {
+    from { opacity:0; transform:translateY(-8px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .person-header {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;
+  }
+  .person-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; color: var(--rose-dark); font-weight: 600;
+  }
+  .remove-btn {
+    background: none; border: none; cursor: pointer; font-size: 1rem;
+    color: var(--muted); padding: 3px 8px; border-radius: 8px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .remove-btn:hover { color: var(--pink); background: var(--pink-light); }
+
+  /* ADD BUTTON */
+  .add-btn {
+    width: 100%; padding: 13px; background: none;
+    border: 1.5px dashed var(--pink); border-radius: 12px; color: var(--pink);
+    font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background 0.2s; margin-top: 4px;
+  }
+  .add-btn:hover { background: var(--pink-light); }
+  .add-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* SUBMIT */
+  .submit-btn {
+    width: 100%; margin-top: 28px; padding: 16px;
+    background: linear-gradient(135deg, var(--pink), var(--rose-dark));
+    border: none; border-radius: 14px; color: white;
+    font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer;
+    letter-spacing: 0.04em; transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 20px rgba(168,85,112,0.35);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(168,85,112,0.4); }
+  .submit-btn:active { transform: translateY(0); }
+
+  /* SUCCESS */
+  .success {
+    display: none;
+    text-align: center;
+    padding: 20px 0 16px;
+    position: relative;
+    min-height: 280px;
+  }
+
+  /* Butterfly images — mix-blend-mode:multiply makes white bg invisible */
+  .bf-img {
+    position: absolute;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .bf-img.show { opacity: 1; }
+
+  /* Large left butterfly */
+  .bf-large-left {
+    width: 140px;
+    left: -18px;
+    top: 50%;
+    transform: translateY(-55%) scaleX(-1);
+    animation: floatL 3.5s ease-in-out infinite;
+  }
+  @keyframes floatL {
+    0%,100% { transform: translateY(-55%) scaleX(-1) rotate(-6deg); }
+    50%      { transform: translateY(calc(-55% - 14px)) scaleX(-1) rotate(-2deg); }
+  }
+
+  /* Large right butterfly */
+  .bf-large-right {
+    width: 140px;
+    right: -18px;
+    top: 50%;
+    transform: translateY(-55%);
+    animation: floatR 3.5s ease-in-out infinite;
+  }
+  @keyframes floatR {
+    0%,100% { transform: translateY(-55%) rotate(6deg); }
+    50%      { transform: translateY(calc(-55% - 14px)) rotate(2deg); }
+  }
+
+  /* Small top-left */
+  .bf-small-left {
+    width: 70px;
+    left: 8px; top: 6px;
+    transform: scaleX(-1) rotate(20deg);
+    animation: floatSL 4s 0.5s ease-in-out infinite;
+  }
+  @keyframes floatSL {
+    0%,100% { transform: scaleX(-1) rotate(20deg) translateY(0); }
+    50%      { transform: scaleX(-1) rotate(14deg) translateY(-8px); }
+  }
+
+  /* Small top-right */
+  .bf-small-right {
+    width: 70px;
+    right: 8px; top: 6px;
+    transform: rotate(-20deg);
+    animation: floatSR 4s 1s ease-in-out infinite;
+  }
+  @keyframes floatSR {
+    0%,100% { transform: rotate(-20deg) translateY(0); }
+    50%      { transform: rotate(-14deg) translateY(-8px); }
+  }
+
+  .success-text {
+    position: relative; z-index: 2;
+    padding: 20px 90px 10px;
+  }
+  .success h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem; color: var(--rose-dark); font-weight: 600; margin-bottom: 16px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .success p {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--text); font-size: 1.1rem; line-height: 1.85; font-style: italic;
+    animation: fadeUp 0.6s 0.15s ease both;
+  }
+  .success .sign {
+    margin-top: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; color: var(--pink); font-weight: 600;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(14px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* deco top */
+  .butterfly-deco {
+    text-align: center; font-size: 1.3rem; letter-spacing: 10px;
+    color: var(--pink-mid); margin-bottom: 6px;
+    animation: floatD 4s ease-in-out infinite;
+  }
+  @keyframes floatD {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-5px); }
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 24px 16px; }
+    .header h1 { font-size: 1.8rem; }
+    .bf-large-left, .bf-large-right { width: 100px; }
+    .bf-small-left, .bf-small-right { width: 52px; }
+    .success-text { padding: 16px 70px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <img src="banner.jpg" alt="Chá de bebê da Celina">
+</div>
+
+<div class="header">
+  <div class="tag">🦋 Você está convidado(a)</div>
+  <h1>Confirmação de Presença<br><em>Chá de bebê da Celina</em></h1>
+  <p class="sub">Preencha os dados de cada convidado e confirme sua presença 💕</p>
+</div>
+
+<div class="card" id="formCard">
+
+  <div class="butterfly-deco">🌸 · 🌸</div>
+  <div class="sec-title">Convidados</div>
+
+  <div id="personList"></div>
+
+  <button class="add-btn" id="addBtn" onclick="addPerson()">
+    + Adicionar convidado
+  </button>
+
+  <div class="divider"></div>
+
+  <button class="submit-btn" onclick="submitForm()">
+    Confirmar Presença &nbsp;🎀
+  </button>
+
+  <!-- SUCCESS -->
+  <div class="success" id="successMsg">
+    <img class="bf-img bf-small-left"  id="bfSL" src="borboleta.jpg" alt="">
+    <img class="bf-img bf-small-right" id="bfSR" src="borboleta.jpg" alt="">
+    <img class="bf-img bf-large-left"  id="bfLL" src="borboleta.jpg" alt="">
+    <img class="bf-img bf-large-right" id="bfLR" src="borboleta.jpg" alt="">
+    <div class="success-text">
+      <h2>Oba! 🌸</h2>
+      <p>Sua presença foi confirmada.<br>
+         Mamãe e Papai estão preparando<br>
+         tudo com muito amor e carinho<br>
+         para celebrar a minha chegada.</p>
+      <div class="sign">Nos vemos em breve! 🦋</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let count = 0;
+const MAX = 4;
+const ageOptions = [
+  { value: '', label: 'Selecione a faixa etária' },
+  { value: 'adulto', label: '🧑 Adultos e adolescentes (+16 anos)' },
+  { value: '12-15', label: '🧒 Adolescentes de 12 a 15 anos' },
+  { value: '6-11',  label: '👦 Crianças de 6 a 11 anos' },
+  { value: '0-5',   label: '👶 Crianças até 5 anos' },
+];
+
+function buildOpts() {
+  return ageOptions.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+}
+
+function addPerson() {
+  if (document.querySelectorAll('.person-card').length >= MAX) return;
+  count++;
+  const idx = document.querySelectorAll('.person-card').length + 1;
+  const isFirst = idx === 1;
+  const div = document.createElement('div');
+  div.className = 'person-card';
+  div.id = `person-${count}`;
+  div.innerHTML = `
+    <div class="person-header">
+      <span class="person-label" id="lbl-${count}">🌸 Convidado ${idx}</span>
+      ${!isFirst ? `<button class="remove-btn" onclick="removePerson(${count})" title="Remover">✕</button>` : ''}
+    </div>
+    <div class="field">
+      <label class="lbl">Nome completo</label>
+      <input type="text" placeholder="Ex: Maria Silva" class="p-name">
+    </div>
+    <div class="field">
+      <label class="lbl">Faixa etária</label>
+      <div class="select-wrap">
+        <select class="p-age">${buildOpts()}</select>
+      </div>
+    </div>
+  `;
+  document.getElementById('personList').appendChild(div);
+  updateBtn();
+}
+
+function removePerson(id) {
+  document.getElementById(`person-${id}`)?.remove();
+  renumber(); updateBtn();
+}
+
+function renumber() {
+  document.querySelectorAll('.person-card').forEach((card, i) => {
+    const lbl = card.querySelector('[id^="lbl-"]');
+    if (lbl) lbl.textContent = `🌸 Convidado ${i + 1}`;
+  });
+}
+
+function updateBtn() {
+  const total = document.querySelectorAll('.person-card').length;
+  document.getElementById('addBtn').disabled = total >= MAX;
+}
+
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxFV9XPsjJNBZjh-exO_xpEAu_FxfYW8rKvWbHq8KqAjBna7MJ0CuO8nu9omEgvPWAZ/exec';
+
+function submitForm() {
+  var cards = document.querySelectorAll('.person-card');
+  if (!cards.length) { alert('Adicione ao menos um convidado.'); return; }
+  var valid = true;
+  var guests = [];
+  var ageLabels = {
+    'adulto': 'Adultos e adolescentes (+16 anos)',
+    '12-15': 'Adolescentes de 12 a 15 anos',
+    '6-11': 'Criancas de 6 a 11 anos',
+    '0-5': 'Criancas ate 5 anos'
+  };
+  cards.forEach(function(c, i) {
+    var name = c.querySelector('.p-name').value.trim();
+    var age  = c.querySelector('.p-age').value;
+    if (!name || !age) {
+      alert('Preencha nome e faixa etaria do Convidado ' + (i + 1) + '.');
+      valid = false;
+    } else {
+      guests.push({ name: name, age: ageLabels[age] || age });
+    }
+  });
+  if (!valid) return;
+
+  var btn = document.querySelector('.submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  var params = 'data=' + encodeURIComponent(JSON.stringify({ guests: guests }));
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', SHEET_URL, true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) { showSuccess(); }
+  };
+  xhr.onerror = function() { showSuccess(); };
+  xhr.send(params);
+  setTimeout(function() { showSuccess(); }, 4000);
+}
+
+function showSuccess() {
+  if (showSuccess.called) return;
+  showSuccess.called = true;
+  document.querySelectorAll('.card > *:not(.success)').forEach(function(el) { el.style.display = 'none'; });
+  document.getElementById('successMsg').style.display = 'block';
+  setTimeout(function() {
+    ['bfSL','bfSR','bfLL','bfLR'].forEach(function(id) { document.getElementById(id).classList.add('show'); });
+  }, 250);
+}
+
+addPerson();
+updateBtn();
+</script>
+</body>
+</html>
